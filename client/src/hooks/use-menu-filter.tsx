@@ -15,7 +15,17 @@ export function useMenuFilter() {
 
     // Filter by category
     if (activeCategory !== "all") {
-      filtered = filtered.filter(item => item.category === activeCategory);
+      if (activeCategory === "drinks") {
+        // "drinks" category includes all beverages
+        filtered = filtered.filter(item => 
+          item.category === "cocktails" || 
+          item.category === "wines" || 
+          item.category === "beers" || 
+          item.category === "non-alcoholic"
+        );
+      } else {
+        filtered = filtered.filter(item => item.category === activeCategory);
+      }
     }
 
     // Filter by search query

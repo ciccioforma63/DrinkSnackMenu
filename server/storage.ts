@@ -370,7 +370,23 @@ export class MemStorage implements IStorage {
 
     menuData.forEach(item => {
       const id = randomUUID();
-      this.menuItems.set(id, { ...item, id });
+      this.menuItems.set(id, { 
+        id,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        category: item.category,
+        subcategory: item.subcategory || null,
+        imageUrl: item.imageUrl,
+        isAvailable: item.isAvailable ?? true,
+        allergens: item.allergens || null,
+        dietary: item.dietary || null,
+        prepTime: item.prepTime || null,
+        strength: item.strength || null,
+        servings: item.servings || null,
+        alcoholContent: item.alcoholContent || null,
+        bottlePrice: item.bottlePrice || null
+      });
     });
   }
 

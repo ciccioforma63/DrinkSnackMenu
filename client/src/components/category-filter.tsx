@@ -7,6 +7,7 @@ interface CategoryFilterProps {
 
 const categories = [
   { id: "all", label: "Tutto" },
+  { id: "drinks", label: "Drinks" },
   { id: "cocktails", label: "Cocktails" },
   { id: "wines", label: "Vini" },
   { id: "beers", label: "Birre" },

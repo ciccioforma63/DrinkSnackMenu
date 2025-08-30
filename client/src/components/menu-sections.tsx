@@ -39,6 +39,8 @@ export default function MenuSections({ menuItems, isLoading, activeCategory }: M
 
   const getSectionTitle = (category: string) => {
     switch (category) {
+      case "drinks":
+        return "Tutte le Bevande";
       case "cocktails":
         return "Cocktails Signature";
       case "wines":
@@ -56,6 +58,8 @@ export default function MenuSections({ menuItems, isLoading, activeCategory }: M
 
   const getSectionDescription = (category: string) => {
     switch (category) {
+      case "drinks":
+        return "La nostra completa selezione di bevande: cocktails, vini, birre e analcolici";
       case "cocktails":
         return "I nostri cocktails artigianali preparati con ingredienti premium e tecniche innovative";
       case "wines":
@@ -95,7 +99,9 @@ export default function MenuSections({ menuItems, isLoading, activeCategory }: M
           </p>
         </div>
 
-        {activeCategory === "wines" ? (
+        {activeCategory === "drinks" ? (
+          <DrinksSection items={categoryItems} />
+        ) : activeCategory === "wines" ? (
           <WinesSection items={categoryItems} />
         ) : activeCategory === "beers" ? (
           <BeersSection items={categoryItems} />
@@ -168,6 +174,61 @@ function WinesSection({ items }: { items: MenuItem[] }) {
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+function DrinksSection({ items }: { items: MenuItem[] }) {
+  const cocktails = items.filter(item => item.category === "cocktails");
+  const wines = items.filter(item => item.category === "wines");
+  const beers = items.filter(item => item.category === "beers");
+  const nonAlcoholic = items.filter(item => item.category === "non-alcoholic");
+
+  return (
+    <div className="space-y-16">
+      {cocktails.length > 0 && (
+        <div>
+          <h3 className="text-3xl font-serif font-semibold mb-8 text-primary text-center" data-testid="cocktails-subsection-title">
+            Cocktails Signature
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {cocktails.map((item) => (
+              <MenuItemCard key={item.id} item={item} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {wines.length > 0 && (
+        <div>
+          <h3 className="text-3xl font-serif font-semibold mb-8 text-primary text-center" data-testid="wines-subsection-title">
+            Selezione Vini
+          </h3>
+          <WinesSection items={wines} />
+        </div>
+      )}
+
+      {beers.length > 0 && (
+        <div>
+          <h3 className="text-3xl font-serif font-semibold mb-8 text-primary text-center" data-testid="beers-subsection-title">
+            Birre Artigianali
+          </h3>
+          <BeersSection items={beers} />
+        </div>
+      )}
+
+      {nonAlcoholic.length > 0 && (
+        <div>
+          <h3 className="text-3xl font-serif font-semibold mb-8 text-primary text-center" data-testid="non-alcoholic-subsection-title">
+            Analcolici & Mocktails
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {nonAlcoholic.map((item) => (
+              <MenuItemCard key={item.id} item={item} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
