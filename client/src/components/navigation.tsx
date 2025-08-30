@@ -3,14 +3,25 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-export default function Navigation() {
+interface NavigationProps {
+  onCategoryChange?: (category: string) => void;
+}
+
+export default function Navigation({ onCategoryChange }: NavigationProps = {}) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavClick = (linkId: string) => {
+    if (linkId === "drinks" && onCategoryChange) {
+      // For drinks, activate the category filter instead of scrolling
+      onCategoryChange("drinks");
       setIsOpen(false);
+    } else {
+      // For other links, scroll to section
+      const element = document.getElementById(linkId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        setIsOpen(false);
+      }
     }
   };
 
@@ -35,7 +46,7 @@ export default function Navigation() {
             {navLinks.map((link) => (
               <button
                 key={link.href}
-                onClick={() => scrollToSection(link.href)}
+                onClick={() => handleNavClick(link.href)}
                 className="text-foreground hover:text-primary transition-colors"
                 data-testid={`nav-link-${link.href}`}
               >
@@ -55,7 +66,7 @@ export default function Navigation() {
                 {navLinks.map((link) => (
                   <button
                     key={link.href}
-                    onClick={() => scrollToSection(link.href)}
+                    onClick={() => handleNavClick(link.href)}
                     className="text-left text-foreground hover:text-primary transition-colors py-2"
                     data-testid={`mobile-nav-link-${link.href}`}
                   >
