@@ -76,6 +76,37 @@ export default function MenuSections({ menuItems, isLoading, activeCategory }: M
   };
 
   if (activeCategory !== "all") {
+    console.log("📋 MenuSections rendering category:", activeCategory);
+    console.log("📊 Available items:", menuItems.length);
+    console.log("🎯 Items for this view:", menuItems);
+    
+    if (activeCategory === "drinks") {
+      // For drinks, use the already filtered items directly
+      if (menuItems.length === 0) {
+        return (
+          <div className="text-center py-20">
+            <p className="text-muted-foreground text-lg" data-testid="no-items-message">
+              Nessun elemento trovato per questa categoria.
+            </p>
+          </div>
+        );
+      }
+
+      return (
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-foreground" data-testid={`section-title-${activeCategory}`}>
+              {getSectionTitle(activeCategory)}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid={`section-description-${activeCategory}`}>
+              {getSectionDescription(activeCategory)}
+            </p>
+          </div>
+          <DrinksSection items={menuItems} />
+        </section>
+      );
+    }
+    
     const categoryItems = groupedItems[activeCategory] || [];
     
     if (categoryItems.length === 0) {
@@ -99,9 +130,7 @@ export default function MenuSections({ menuItems, isLoading, activeCategory }: M
           </p>
         </div>
 
-        {activeCategory === "drinks" ? (
-          <DrinksSection items={categoryItems} />
-        ) : activeCategory === "wines" ? (
+        {activeCategory === "wines" ? (
           <WinesSection items={categoryItems} />
         ) : activeCategory === "beers" ? (
           <BeersSection items={categoryItems} />

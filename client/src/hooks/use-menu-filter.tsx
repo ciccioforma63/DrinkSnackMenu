@@ -11,6 +11,7 @@ export function useMenuFilter() {
   });
 
   const filteredItems = useMemo(() => {
+    console.log("🔍 Filtering items:", { activeCategory, searchQuery, totalItems: menuItems.length });
     let filtered = menuItems;
 
     // Filter by category
@@ -23,8 +24,10 @@ export function useMenuFilter() {
           item.category === "beers" || 
           item.category === "non-alcoholic"
         );
+        console.log("🍹 Drinks filter applied, found:", filtered.length, "items");
       } else {
         filtered = filtered.filter(item => item.category === activeCategory);
+        console.log(`📂 Category ${activeCategory} filter applied, found:`, filtered.length, "items");
       }
     }
 
@@ -36,8 +39,10 @@ export function useMenuFilter() {
         item.description.toLowerCase().includes(query) ||
         item.category.toLowerCase().includes(query)
       );
+      console.log("🔎 Search filter applied, found:", filtered.length, "items");
     }
 
+    console.log("✅ Final filtered items:", filtered.length);
     return filtered;
   }, [menuItems, activeCategory, searchQuery]);
 

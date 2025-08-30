@@ -423,7 +423,23 @@ export class MemStorage implements IStorage {
 
   async createMenuItem(insertItem: InsertMenuItem): Promise<MenuItem> {
     const id = randomUUID();
-    const item: MenuItem = { ...insertItem, id };
+    const item: MenuItem = { 
+      id,
+      name: insertItem.name,
+      description: insertItem.description,
+      price: insertItem.price,
+      category: insertItem.category,
+      subcategory: insertItem.subcategory || null,
+      imageUrl: insertItem.imageUrl,
+      isAvailable: insertItem.isAvailable ?? true,
+      allergens: insertItem.allergens || null,
+      dietary: insertItem.dietary || null,
+      prepTime: insertItem.prepTime || null,
+      strength: insertItem.strength || null,
+      servings: insertItem.servings || null,
+      alcoholContent: insertItem.alcoholContent || null,
+      bottlePrice: insertItem.bottlePrice || null
+    };
     this.menuItems.set(id, item);
     return item;
   }
