@@ -76,10 +76,6 @@ export default function MenuSections({ menuItems, isLoading, activeCategory }: M
   };
 
   if (activeCategory !== "all") {
-    console.log("📋 MenuSections rendering category:", activeCategory);
-    console.log("📊 Available items:", menuItems.length);
-    console.log("🎯 Items for this view:", menuItems);
-    
     if (activeCategory === "drinks") {
       // For drinks, use the already filtered items directly
       if (menuItems.length === 0) {
